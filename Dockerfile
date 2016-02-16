@@ -5,11 +5,11 @@ RUN mv /bin/chown /bin/chown.disabled && echo '#!/bin/bash' > /bin/chown && echo
 
 # multiple entrypoints
 COPY ackee-entrypoint.sh /ackee-entrypoint.sh
-RUN mv /entrypoint.sh /opt/02-docker-entrypoint.sh && mv /ackee-entrypoint.sh /entrypoint.sh
+COPY setup_mongo.sh /opt/02-setup-mongo.sh
+RUN mv /entrypoint.sh /opt/03-docker-entrypoint.sh && mv /ackee-entrypoint.sh /entrypoint.sh
 
 # switch mongodb user to root
-RUN echo 'DAEMONUSER=root' > /etc/default/mongod && echo 'DAEMONGROUP=root' >> /etc/default/mongod
-RUN sed -i '8,12s/^/#/' /opt/02-docker-entrypoint.sh
+RUN sed -i '8,12s/^/#/' /opt/03-docker-entrypoint.sh
 
 # backups
 # install s3cmd
