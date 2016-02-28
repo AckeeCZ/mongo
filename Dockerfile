@@ -16,3 +16,4 @@ RUN sed -i '8,12s/^/#/' /opt/03-docker-entrypoint.sh
 RUN apt-get update && apt-get install -y s3cmd && rm -rf /var/lib/apt/lists/*
 COPY s3cfg /root/.s3cfg
 COPY mongo-backup.sh /opt/01-mongo-backup.sh
+COPY s3-login-validation.sh /opt/04-s3-login-validation.sh
