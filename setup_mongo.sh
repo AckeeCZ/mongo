@@ -15,6 +15,13 @@ if [ ! -f /data/db/.mongodb_password_set ]; then
   done
   
   mongo admin --eval "db.createUser({user: '$USER', pwd: '$PASS', roles:['root']});"
+  mongo admin --eval "db.createUser({user: 'myUserAdmin', pwd: '$PASS', roles:['userAdminAnyDatabase']});"
+
+db.createUser( {
+    user: "myUserAdmin",
+    pwd: "<password>",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  });
   
   touch /data/db/.mongodb_password_set
   
@@ -32,8 +39,21 @@ fi
 
 # create a wrapper to run the mongo daemon with security enabled
 mv -f /usr/bin/mongod /usr/bin/mongod.orig
-cat >/usr/bin/mongod <<EOF
+
+
+if [ -n "$KEY_FILE" && -n "$REPL_SET"]; then
+# HA cluster
+    echo $REPL_SET > /mongodb-keyfile
+    chmod 600 /mongodb-keyfile
+    cat >/usr/bin/mongod <<EOF
+echo -e "#!/bin/bash" > /usr/bin/mongod
+echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --replSet \"$REPL_SET\"" >> /usr/bin/mongod
+    chmod +x /usr/bin/mongod
+else
+# single instance
+    cat >/usr/bin/mongod <<EOF
 #!/bin/bash
 exec /usr/bin/mongod.orig --auth
 EOF
-chmod +x /usr/bin/mongod
+    chmod +x /usr/bin/mongod
+fi
