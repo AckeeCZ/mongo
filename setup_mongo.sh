@@ -39,7 +39,6 @@ if [ -n "$KEY_FILE" -a -n "$REPL_SET" ]; then
 # HA cluster
     echo $REPL_SET > /mongodb-keyfile
     chmod 600 /mongodb-keyfile
-    cat >/usr/bin/mongod <<EOF
 echo -e "#!/bin/bash" > /usr/bin/mongod
 echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --replSet \"$REPL_SET\"" >> /usr/bin/mongod
     chmod +x /usr/bin/mongod
