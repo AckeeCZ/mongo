@@ -16,12 +16,6 @@ if [ ! -f /data/db/.mongodb_password_set ]; then
   
   mongo admin --eval "db.createUser({user: '$USER', pwd: '$PASS', roles:['root']});"
   mongo admin --eval "db.createUser({user: 'myUserAdmin', pwd: '$PASS', roles:['userAdminAnyDatabase']});"
-
-db.createUser( {
-    user: "myUserAdmin",
-    pwd: "<password>",
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
-  });
   
   touch /data/db/.mongodb_password_set
   
