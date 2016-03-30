@@ -35,7 +35,7 @@ fi
 mv -f /usr/bin/mongod /usr/bin/mongod.orig
 
 
-if [ -n "$KEY_FILE" && -n "$REPL_SET" ]; then
+if [ -n "$KEY_FILE" -a -n "$REPL_SET" ]; then
 # HA cluster
     echo $REPL_SET > /mongodb-keyfile
     chmod 600 /mongodb-keyfile
