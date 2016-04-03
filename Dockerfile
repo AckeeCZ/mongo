@@ -3,6 +3,8 @@ FROM mongo:latest
 # Create fake chown so docker scripts won't fail (ugly)
 RUN mv /bin/chown /bin/chown.disabled && echo '#!/bin/bash' > /bin/chown && echo '/bin/chown.disabled "$@"' >> /bin/chown && echo 'exit 0' >> /bin/chown && chmod +x /bin/chown
 
+VOLUME /data
+
 # multiple entrypoints
 COPY ackee-entrypoint.sh /ackee-entrypoint.sh
 COPY setup_mongo.sh /opt/02-setup-mongo.sh
