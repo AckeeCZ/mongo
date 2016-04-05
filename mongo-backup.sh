@@ -16,7 +16,7 @@ echo "S3_BUCKET_DIR=$S3_BUCKET_DIR" >> /etc/crontab
 echo "MONGO_ROOT_PASSWORD=$MONGO_ROOT_PASSWORD" >> /etc/crontab
 
 # add cron job
-echo -e '0 2 * * * root rm -rf /tmp/dump && mongodump -u root -p $MONGO_ROOT_PASSWORD --gzip -o /tmp/dump && s3cmd sync /tmp/dump s3://ackee-backups/$S3_BUCKET_DIR/ && rm -rf /tmp/dump' >> /etc/crontab
+#echo -e '0 2 * * * root rm -rf /tmp/dump && mongodump -u root -p $MONGO_ROOT_PASSWORD --gzip -o /tmp/dump && s3cmd sync /tmp/dump s3://ackee-backups/$S3_BUCKET_DIR/ && rm -rf /tmp/dump' >> /etc/crontab
 crontab /etc/crontab
 
 #start cron
