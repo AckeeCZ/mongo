@@ -32,6 +32,7 @@ if [ ! -f /data/db/.mongodb_password_set ]; then
 fi
 
 # create a wrapper to run the mongo daemon with security enabled
+if [ ! -f /usr/bin/mongod.orig ]; then
 mv -f /usr/bin/mongod /usr/bin/mongod.orig
 
 
@@ -50,4 +51,5 @@ else
 exec /usr/bin/mongod.orig --auth
 EOF
     chmod +x /usr/bin/mongod
+fi
 fi
