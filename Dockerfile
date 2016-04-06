@@ -9,4 +9,4 @@ COPY setup_mongo.sh /opt/02-setup-mongo.sh
 RUN mv /entrypoint.sh /opt/03-mongo-entrypoint.sh && mv /ackee-entrypoint.sh /entrypoint.sh
 
 # switch mongodb user to root
-RUN sed -i '8,12s/^/#/' /opt/03-docker-entrypoint.sh
+RUN sed -i '8,12s/^/#/' /opt/03-mongo-entrypoint.sh
