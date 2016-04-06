@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#verify variables
+if [ -z "$MONGO_ROOT_PASSWORD" ]; then
+  echo >&2 'You need to specify MONGO_ROOT_PASSWORD.'
+  exit 1
+fi
+
 if [ ! -f /data/db/.mongodb_password_set ]; then
   mongod &
   
@@ -36,13 +42,13 @@ if [ ! -f /usr/bin/mongod.orig ]; then
 mv -f /usr/bin/mongod /usr/bin/mongod.orig
 
 
-if [ -n "$KEY_FILE" -a -n "$REPL_SET" ]; then
+if [ -n "$CLUSTER_KEY" -a -n "$REPL_SET_NAME" ]; then
 # HA cluster
-    echo "deploying cluster $REPL_SET"
-    echo "$KEY_FILE" > /mongodb-keyfile
+    echo "deploying cluster $REPL_SET_NAME"
+    echo "$CLUSTER_KEY" > /mongodb-keyfile
     chmod 600 /mongodb-keyfile
 echo -e "#!/bin/bash" > /usr/bin/mongod
-echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --replSet \"$REPL_SET\"" >> /usr/bin/mongod
+echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --replSet \"$REPL_SET_NAME\"" >> /usr/bin/mongod
     chmod +x /usr/bin/mongod
 else
 # single instance
