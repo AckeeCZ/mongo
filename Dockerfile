@@ -1,21 +1,33 @@
-FROM mongo:latest
+FROM debian:wheezy
 
-# Create fake chown so docker scripts won't fail (ugly)
-RUN mv /bin/chown /bin/chown.disabled && echo '#!/bin/bash' > /bin/chown && echo '/bin/chown.disabled "$@"' >> /bin/chown && echo 'exit 0' >> /bin/chown && chmod +x /bin/chown
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+		numactl \
+	&& rm -rf /var/lib/apt/lists/*
 
-VOLUME /data
+ENV MONGO_MAJOR 3.2
+ENV MONGO_VERSION 3.2.4
 
-# multiple entrypoints
-COPY ackee-entrypoint.sh /ackee-entrypoint.sh
-COPY setup_mongo.sh /opt/02-setup-mongo.sh
-RUN mv /entrypoint.sh /opt/03-docker-entrypoint.sh && mv /ackee-entrypoint.sh /entrypoint.sh
+RUN echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/$MONGO_MAJOR main" > /etc/apt/sources.list.d/mongodb-org.list
 
-# switch mongodb user to root
-RUN sed -i '8,12s/^/#/' /opt/03-docker-entrypoint.sh
+RUN set -x \
+	&& apt-get update \
+	&& apt-get install -y \
+		mongodb-org=$MONGO_VERSION \
+		mongodb-org-shell=$MONGO_VERSION \
+		mongodb-org-tools=$MONGO_VERSION \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& rm -rf /var/lib/mongodb \
+	&& mv /etc/mongod.conf /etc/mongod.conf.orig
+
+# entrypoint
+COPY entrypoint.sh /entrypoint.sh
 
 # backups
-# install s3cmd
+# install s3cmd and cron
 RUN apt-get update && apt-get install -y s3cmd && apt-get install -y cron && rm -rf /var/lib/apt/lists/*
 COPY s3cfg /root/.s3cfg
-COPY mongo-backup.sh /opt/01-mongo-backup.sh
-COPY s3-login-validation.sh /opt/04-s3-login-validation.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["cron", "-f"]
