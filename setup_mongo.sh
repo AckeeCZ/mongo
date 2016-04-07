@@ -34,6 +34,7 @@ if [ ! -f /data/db/.mongodb_password_set ]; then
     mongo admin --eval "help" >/dev/null 2>&1
     RET=$?
   done
+   echo "=> MongoDB service shutdown"
  
 fi
 
@@ -44,7 +45,7 @@ mv -f /usr/bin/mongod /usr/bin/mongod.orig
 
 if [ -n "$CLUSTER_KEY" -a -n "$REPL_SET_NAME" ]; then
 # HA cluster
-    echo "deploying cluster $REPL_SET_NAME"
+    echo "=> Deploying cluster $REPL_SET_NAME"
     echo "$CLUSTER_KEY" > /mongodb-keyfile
     chmod 600 /mongodb-keyfile
 echo -e "#!/bin/bash" > /usr/bin/mongod
@@ -52,6 +53,7 @@ echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --replSet \
     chmod +x /usr/bin/mongod
 else
 # single instance
+    echo "=> Deploying single instance"
     cat >/usr/bin/mongod <<EOF
 #!/bin/bash
 exec /usr/bin/mongod.orig --auth
