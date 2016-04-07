@@ -25,16 +25,8 @@ if [ ! -f /data/db/.mongodb_password_set ]; then
   
   touch /data/db/.mongodb_password_set
   
-  mongo admin -u ${USER} -p ${PASS} --eval "db.shutdownServer()"
-
-  RET=0
-  while [[ RET -eq 0 ]]; do
-    echo "=> Waiting for confirmation of MongoDB service shutdown"
-    sleep 5
-    mongo admin --eval "help" >/dev/null 2>&1
-    RET=$?
-  done
-   echo "=> MongoDB service shutdown"
+  mongod --shutdown
+  echo "=> MongoDB service shutdown"
  
 fi
 
