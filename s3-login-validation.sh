@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-if [ -z "$S3_ACCESS_KEY" -a -z "$S3_SECRET_KEY" -a -z "$S3_BUCKET_DIR" ]; then
+if [ -z "$S3_ACCESS_KEY" -o -z "$S3_SECRET_KEY" -o -z "$S3_BUCKET_DIR" ]; then
         echo >&2 'Login information is not complete. You need to specify S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET_DIR.'
         exit 1
 fi
