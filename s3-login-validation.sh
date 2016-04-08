@@ -6,4 +6,4 @@ if [ -z "$S3_ACCESS_KEY" -o -z "$S3_SECRET_KEY" -o -z "$S3_BUCKET_DIR" ]; then
         exit 1
 fi
 
-s3cmd ls "s3://ackee-backups/$S3_BUCKET_DIR" > /dev/null
+s3cmd ls "s3://ackee-backups/$S3_BUCKET_DIR"
