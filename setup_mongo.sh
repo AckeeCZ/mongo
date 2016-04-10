@@ -7,7 +7,7 @@ if [ -z "$MONGO_ROOT_PASSWORD" ]; then
 fi
 
 if [ ! -f /data/db/.mongodb_password_set ]; then
-  mongod &
+  mongod --bind_ip 127.0.0.1 &
   
   USER=${MONGO_ROOT_USER:-"root"}
   PASS=${MONGO_ROOT_PASSWORD:-"toor"}
