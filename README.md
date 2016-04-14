@@ -11,3 +11,4 @@ Following ENV variables must be specified:
   - `bucket-name/directory`
  - `S3_ACCESS_KEY`
  - `S3_SECRET_KEY`
+ - `CRON_SCHEDULE` cron schedule string, default '0 2 * * *'
