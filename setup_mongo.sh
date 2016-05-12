@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#cache size
+CACHE=${WT_CACHE:-"1"}
+
 #verify variables
 if [ -z "$MONGO_ROOT_PASSWORD" ]; then
   echo >&2 'You need to specify MONGO_ROOT_PASSWORD.'
@@ -51,14 +54,14 @@ if [ -n "$CLUSTER_KEY" -a -n "$REPL_SET_NAME" ]; then
     echo "$CLUSTER_KEY" > /mongodb-keyfile
     chmod 600 /mongodb-keyfile
 echo -e "#!/bin/bash" > /usr/bin/mongod
-echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --replSet \"$REPL_SET_NAME\"" >> /usr/bin/mongod
+echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --wiredTigerCacheSizeGB \"$CACHE\" --replSet \"$REPL_SET_NAME\"" >> /usr/bin/mongod
     chmod +x /usr/bin/mongod
 else
 # single instance
     echo "=> Deploying single instance"
     cat >/usr/bin/mongod <<EOF
 #!/bin/bash
-exec /usr/bin/mongod.orig --auth
+exec /usr/bin/mongod.orig --auth --wiredTigerCacheSizeGB \"$CACHE\"
 EOF
     chmod +x /usr/bin/mongod
 fi
