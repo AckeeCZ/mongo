@@ -66,7 +66,7 @@ else
     echo "=> Deploying single instance"
     cat >/usr/bin/mongod <<EOF
 #!/bin/bash
-exec /usr/bin/mongod.orig --auth --wiredTigerCacheSizeGB \"$WT_CACHE\"
+exec /usr/bin/mongod.orig --auth --wiredTigerCacheSizeGB $WT_CACHE
 EOF
     chmod +x /usr/bin/mongod
 fi
