@@ -59,7 +59,7 @@ if [ -n "$CLUSTER_KEY" -a -n "$REPL_SET_NAME" ]; then
     echo "$CLUSTER_KEY" > /mongodb-keyfile
     chmod 600 /mongodb-keyfile
 echo -e "#!/bin/bash" > /usr/bin/mongod
-echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --wiredTigerCacheSizeGB \"$WT_CACHE\" --replSet \"$REPL_SET_NAME\"" >> /usr/bin/mongod
+echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --wiredTigerCacheSizeGB $WT_CACHE --replSet $REPL_SET_NAME" >> /usr/bin/mongod
     chmod +x /usr/bin/mongod
 else
 # single instance
