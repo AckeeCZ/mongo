@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #cache size
-CACHE=${WT_CACHE:-1}
+#CACHE=${WT_CACHE:-1}
 
 # switch mongodb user to root
 if [ -z "$RUN_AS_ROOT" ]; then
@@ -9,8 +9,8 @@ RUN sed -i '8,12s/^/#/' /opt/03-mongo-entrypoint.sh
 fi
 
 #verify variables
-if [ -z "$MONGO_ROOT_PASSWORD" ]; then
-  echo >&2 'You need to specify MONGO_ROOT_PASSWORD.'
+if [ -z "$MONGO_ROOT_PASSWORD" -z "$WT_CACHE" ]; then
+  echo >&2 'You need to specify MONGO_ROOT_PASSWORD and WT_CACHE'
   exit 1
 fi
 
@@ -59,14 +59,14 @@ if [ -n "$CLUSTER_KEY" -a -n "$REPL_SET_NAME" ]; then
     echo "$CLUSTER_KEY" > /mongodb-keyfile
     chmod 600 /mongodb-keyfile
 echo -e "#!/bin/bash" > /usr/bin/mongod
-echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --wiredTigerCacheSizeGB \"$CACHE\" --replSet \"$REPL_SET_NAME\"" >> /usr/bin/mongod
+echo -e "exec /usr/bin/mongod.orig --auth --keyFile /mongodb-keyfile --wiredTigerCacheSizeGB \"$WT_CACHE\" --replSet \"$REPL_SET_NAME\"" >> /usr/bin/mongod
     chmod +x /usr/bin/mongod
 else
 # single instance
     echo "=> Deploying single instance"
     cat >/usr/bin/mongod <<EOF
 #!/bin/bash
-exec /usr/bin/mongod.orig --auth --wiredTigerCacheSizeGB \"$CACHE\"
+exec /usr/bin/mongod.orig --auth --wiredTigerCacheSizeGB \"$WT_CACHE\"
 EOF
     chmod +x /usr/bin/mongod
 fi
