@@ -9,7 +9,7 @@ sed -i '8,12s/^/#/' /opt/03-mongo-entrypoint.sh
 #fi
 
 #verify variables
-if [ -z "$MONGO_ROOT_PASSWORD" -z "$WT_CACHE" ]; then
+if [ -z "$MONGO_ROOT_PASSWORD" -a -z "$WT_CACHE" ]; then
   echo >&2 'You need to specify MONGO_ROOT_PASSWORD and WT_CACHE'
   exit 1
 fi
