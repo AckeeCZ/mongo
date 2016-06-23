@@ -4,9 +4,9 @@
 #CACHE=${WT_CACHE:-1}
 
 # switch mongodb user to root
-if [ -z "$RUN_AS_ROOT" ]; then
+#if [ -z "$RUN_AS_ROOT" ]; then
 RUN sed -i '8,12s/^/#/' /opt/03-mongo-entrypoint.sh
-fi
+#fi
 
 #verify variables
 if [ -z "$MONGO_ROOT_PASSWORD" -z "$WT_CACHE" ]; then
