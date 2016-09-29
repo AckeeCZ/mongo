@@ -52,6 +52,11 @@ fi
 if [ ! -f /usr/bin/mongod.orig ]; then
 mv -f /usr/bin/mongod /usr/bin/mongod.orig
 
+#overwrite local DNS
+if [ -n "$MONGO_RS0_1_IP" -a -n "$MONGO_RS0_2_IP" ]; then
+  echo "mongo-rs0-1 $MONGO_RS0_1_IP" >> /etc/hosts
+  echo "mongo-rs0-2 $MONGO_RS0_2_IP" >> /etc/hosts
+fi
 
 if [ -n "$CLUSTER_KEY" -a -n "$REPL_SET_NAME" ]; then
 # HA cluster
