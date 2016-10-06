@@ -3,7 +3,8 @@
 
 echo "Running multiple entrypoints script... "
 
-for a in opt/*
+for a in opt/*.sh
+
 do
     echo "running script $a"
     $a "$@"
