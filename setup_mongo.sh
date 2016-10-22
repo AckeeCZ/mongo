@@ -57,6 +57,7 @@ if [ -n "$MONGO_RS0_1_IP" -a -n "$MONGO_RS0_2_IP" -a -n "$MONGO_RS0_1_URL" -a -n
   echo "$MONGO_RS0_1_IP $MONGO_RS0_1_URL" >> /etc/hosts
   echo "$MONGO_RS0_2_IP $MONGO_RS0_2_URL" >> /etc/hosts
   echo "$MONGO_RS0_3_IP $MONGO_RS0_3_URL" >> /etc/hosts
+  echo "$MONGO_RS0_4_IP $MONGO_RS0_4_URL" >> /etc/hosts
 fi
 
 if [ -n "$CLUSTER_KEY" -a -n "$REPL_SET_NAME" ]; then
