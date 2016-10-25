@@ -10,4 +10,4 @@ RUN curl -O https://repo.stackdriver.com/stack-install.sh && bash stack-install.
 COPY ackee-entrypoint.sh /ackee-entrypoint.sh
 COPY setup_mongo.sh /opt/02-setup-mongo.sh
 COPY setup_stackdriver.sh /opt/03-setup-stackdriver.sh
-RUN mv /entrypoint.sh /opt/04-mongo-entrypoint.sh && mv /ackee-entrypoint.sh /entrypoint.sh
+RUN cp /entrypoint.sh /opt/04-mongo-entrypoint.sh && cp /ackee-entrypoint.sh /entrypoint.sh
