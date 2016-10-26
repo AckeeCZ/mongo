@@ -11,3 +11,4 @@ Following ENV variables must be specified:
 Following ENV variables are optional, if set (both) the image acts as a node of a cluster:
  - `REPL_SET_NAME` specifies replica set (name of the cluster)
  - `CLUSTER_KEY` is a shared key that use single nodes of the cluster to authenticate to each other (keep it long)
+
