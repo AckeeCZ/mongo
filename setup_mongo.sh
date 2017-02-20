@@ -5,7 +5,7 @@
 
 # switch mongodb user to root
 #if [ -z "$RUN_AS_ROOT" ]; then
-sed -i '8,12s/^/#/' /opt/04-mongo-entrypoint.sh
+sed -i '10,15s/^/#/' /opt/04-mongo-entrypoint.sh
 #fi
 
 #verify variables
