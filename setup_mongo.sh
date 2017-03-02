@@ -80,4 +80,4 @@ fi
 fi
 
 # listen on all interfaces
-sed -i '/bindIp: 127.0.0.1/d' /etc/mongod.conf.orig
+#sed -i '/bindIp: 127.0.0.1/d' /etc/mongod.conf.orig
