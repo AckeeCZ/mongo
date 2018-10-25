@@ -4,7 +4,7 @@ FROM mongo:3.2
 #RUN mv /bin/chown /bin/chown.disabled && echo '#!/bin/bash' > /bin/chown && echo '/bin/chown.disabled "$@"' >> /bin/chown && echo 'exit 0' >> /bin/chown && chmod +x /bin/chown
 
 RUN apt-get update && apt-get install -y curl lsb-release pwgen
-RUN curl -O https://repo.stackdriver.com/stack-install.sh && bash stack-install.sh --write-gcm
+#RUN curl -O https://repo.stackdriver.com/stack-install.sh && bash stack-install.sh --write-gcm
 
 # overwrite origin entrypoint
 

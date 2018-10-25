@@ -1,7 +1,7 @@
 #!/bin/bash
 
 curl -sSO https://dl.google.com/cloudagents/install-monitoring-agent.sh
-sudo bash install-monitoring-agent.sh
+bash install-monitoring-agent.sh
 
 #/opt/stackdriver/stack-config --write-gcm
 cd /opt/stackdriver/collectd/etc/collectd.d/ 
