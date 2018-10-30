@@ -3,6 +3,9 @@
 curl -sSO https://dl.google.com/cloudagents/install-monitoring-agent.sh
 bash install-monitoring-agent.sh
 
+hostname=$(hostname)
+sed -i 's/Hostname ""/Hostname "'$hostname'"'
+ 
 #/opt/stackdriver/stack-config --write-gcm
 cd /opt/stackdriver/collectd/etc/collectd.d/ 
 curl -O https://raw.githubusercontent.com/Stackdriver/stackdriver-agent-service-configs/master/etc/collectd.d/mongodb.conf
