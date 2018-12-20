@@ -10,5 +10,5 @@ RUN apt-get update && apt-get install -y curl lsb-release pwgen
 
 COPY ackee-entrypoint.sh /ackee-entrypoint.sh
 COPY setup_mongo.sh /opt/02-setup-mongo.sh
-COPY setup_stackdriver.sh /opt/03-setup-stackdriver.sh
+#COPY setup_stackdriver.sh /opt/03-setup-stackdriver.sh
 RUN cp /entrypoint.sh /opt/04-mongo-entrypoint.sh && cp /ackee-entrypoint.sh /entrypoint.sh
